@@ -10,11 +10,11 @@ public class Board {
 	private Boolean[][] cells;
 	
 	private Board (){
+		cells = new Boolean[DEFAULT_COLUMNS][DEFAULT_LINES];
 		initCells();
 	}
 
 	private void initCells() {
-		cells = new Boolean[DEFAULT_COLUMNS][DEFAULT_LINES];
 		for(int column = 0; column < DEFAULT_COLUMNS; column++){
 			for(int line = 0; line < DEFAULT_LINES; line++){
 				cells[column][line] = false;
