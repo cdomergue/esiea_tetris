@@ -18,13 +18,13 @@ public class CellTest {
 	
 	@Test
 	public void testIfCellIsInitialised() {
-		assertEquals(0, cell.getPieceId());
+		assertEquals(0, cell.getTetriminoId());
 	}
 	
 	@Test
 	public void testIfCanSetPieceId(){
-		cell.setPieceId(42);
-		assertEquals(42, cell.getPieceId());
+		cell.setTetriminoId(42);
+		assertEquals(42, cell.getTetriminoId());
 	}
 
 }

@@ -2,18 +2,18 @@ package main.java.domergue.bastide.jTetris.components;
 
 public class Cell {
 	
-	private int pieceId;
+	private int tetriminoId;
 	
-	public Cell(int pieceId){
-		this.pieceId = pieceId;
+	public Cell(int tetriminoId){
+		this.tetriminoId = tetriminoId;
 	}
 
-	public int getPieceId() {
-		return pieceId;
+	public int getTetriminoId() {
+		return tetriminoId;
 	}
 
-	public void setPieceId(int pieceId) {
-		this.pieceId = pieceId;
+	public void setTetriminoId(int tetriminoId) {
+		this.tetriminoId = tetriminoId;
 	}
 	
 	
