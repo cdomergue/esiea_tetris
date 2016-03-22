@@ -7,17 +7,17 @@ public class Board {
 	public static final int DEFAULT_LINES = 21;
 	
 	private static Board instance;
-	private Boolean[][] cells;
+	private Cell[][] cells;
 	
 	private Board (){
-		cells = new Boolean[DEFAULT_COLUMNS][DEFAULT_LINES];
+		cells = new Cell[DEFAULT_COLUMNS][DEFAULT_LINES];
 		initCells();
 	}
 
 	private void initCells() {
 		for(int column = 0; column < DEFAULT_COLUMNS; column++){
 			for(int line = 0; line < DEFAULT_LINES; line++){
-				cells[column][line] = false;
+				cells[column][line] = new Cell(0);
 			}
 		}
 	}
@@ -29,11 +29,11 @@ public class Board {
 		return(instance);
 	}
 
-	public Boolean[][] getCells() {
+	public Cell[][] getCells() {
 		return this.cells;
 	}
 
-	public Boolean getCell(int i, int j) throws IndexOutOfBoundsException {
+	public Cell getCell(int i, int j) throws IndexOutOfBoundsException {
 		return this.cells[i][j];
 	}
 	

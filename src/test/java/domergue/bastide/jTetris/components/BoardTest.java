@@ -31,8 +31,8 @@ public class BoardTest {
 	
 	@Test
 	public void boardShouldBeInitialised() {
-		assertEquals(false, board.getCell(4, 2));
-		assertEquals(false, board.getCell(6, 9));
+		assertEquals(0, board.getCell(4, 2).getPieceId());
+		assertEquals(0, board.getCell(6, 9).getPieceId());
 	}
 	
 	@Test(expected=IndexOutOfBoundsException.class)
