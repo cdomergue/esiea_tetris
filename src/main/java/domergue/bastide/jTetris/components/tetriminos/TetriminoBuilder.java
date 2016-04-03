@@ -30,6 +30,41 @@ public class TetriminoBuilder {
 			shape.setUnits(2,0,true);
 			shape.setUnits(3,0,true);
 			break;
+		case PIECE_O:
+			shape.setUnits(0, 0, true);
+			shape.setUnits(1, 0, true);
+			shape.setUnits(0, 1, true);
+			shape.setUnits(1, 1, true);
+			break;
+		case PIECE_T:
+			shape.setUnits(0, 0, true);
+			shape.setUnits(1, 0, true);
+			shape.setUnits(2, 0, true);
+			shape.setUnits(1, 1, true);
+			break;
+		case PIECE_L:
+			shape.setUnits(0, 0, true);
+			shape.setUnits(1, 0, true);
+			shape.setUnits(2, 0, true);
+			shape.setUnits(0, 1, true);
+			break;
+		case PIECE_J:
+			shape.setUnits(0, 0, true);
+			shape.setUnits(1, 0, true);
+			shape.setUnits(2, 0, true);
+			shape.setUnits(2, 1, true);
+			break;
+		case PIECE_Z:
+			shape.setUnits(0, 0, true);
+			shape.setUnits(1, 0, true);
+			shape.setUnits(1, 1, true);
+			shape.setUnits(2, 1, true);
+			break;
+		case PIECE_S:
+			shape.setUnits(1, 0, true);
+			shape.setUnits(2, 0, true);
+			shape.setUnits(0, 1, true);
+			shape.setUnits(1, 1, true);
 		default:
 			break;
 			

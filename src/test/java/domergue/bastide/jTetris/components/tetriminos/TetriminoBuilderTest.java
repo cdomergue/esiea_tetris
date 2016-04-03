@@ -26,5 +26,15 @@ public class TetriminoBuilderTest {
 		assertEquals(true, tetriminoI.getShape().getUnits(3, 0));
 		assertEquals(false, tetriminoI.getShape().getUnits(2, 3));
 	}
+	
+	 @Test
+	 public void testIdTetriminos(){
+		 Tetrimino tetriminoId2 = tetriminoBuilder.build(TetriminoPieces.PIECE_T);		 
+		 Tetrimino tetriminoId3 = tetriminoBuilder.build(TetriminoPieces.PIECE_L);
+		 
+		 assertEquals(2, tetriminoId2.getTetriminoId());
+		 assertEquals(3, tetriminoId3.getTetriminoId());
+		
+	 }
 
 }
