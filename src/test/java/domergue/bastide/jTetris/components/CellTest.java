@@ -13,7 +13,7 @@ public class CellTest {
 
 	@Before
 	public void beforeTests(){
-		cell = new Cell(0);
+		cell = new Cell();
 	}
 	
 	@Test
