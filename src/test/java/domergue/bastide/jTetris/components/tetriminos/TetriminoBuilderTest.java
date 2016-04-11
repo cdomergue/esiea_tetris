@@ -22,9 +22,9 @@ public class TetriminoBuilderTest {
 	public void testTeriminoIPiece() {
 		Tetrimino tetriminoI = tetriminoBuilder.build(TetriminoPieces.PIECE_I);
 		
-		assertEquals(true, tetriminoI.getShape().getUnits(2, 0));
-		assertEquals(true, tetriminoI.getShape().getUnits(3, 0));
-		assertEquals(false, tetriminoI.getShape().getUnits(2, 3));
+		assertEquals(true, tetriminoI.getShape().getUnits(0, 2));
+		assertEquals(true, tetriminoI.getShape().getUnits(0, 3));
+		assertEquals(false, tetriminoI.getShape().getUnits(3, 2));
 	}
 	
 	 @Test

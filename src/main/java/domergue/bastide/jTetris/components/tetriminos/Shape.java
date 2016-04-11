@@ -2,13 +2,12 @@ package main.java.domergue.bastide.jTetris.components.tetriminos;
 
 public class Shape {
 
-	public static final int MAX_SHAPE_COLUMNS = 4;
-	public static final int MAX_SHAPE_LINES = 4;
+	public static final int MATRIX_SIZE = 4;
 	
 	private Boolean[][] units;
 
 	public Shape(){
-		this.units = new Boolean[MAX_SHAPE_COLUMNS][MAX_SHAPE_LINES];
+		this.units = new Boolean[MATRIX_SIZE][MATRIX_SIZE];
 		initUnits();
 	}
 
@@ -20,18 +19,32 @@ public class Shape {
 		}
 	}
 	
-	public boolean getUnits(int column, int line) throws IndexOutOfBoundsException {
-		if(column > MAX_SHAPE_COLUMNS -1 || line > MAX_SHAPE_LINES - 1){
+	public boolean getUnits(int line, int column) throws IndexOutOfBoundsException {
+		if(column > MATRIX_SIZE -1 || line > MATRIX_SIZE - 1){
 			throw new IndexOutOfBoundsException();
 		}
-		return units[column][line];
+		return units[line][column];
 	}
 
-	public void setUnits(int column, int line, boolean value) throws IndexOutOfBoundsException {
-		if(column > MAX_SHAPE_COLUMNS -1 || line > MAX_SHAPE_LINES - 1){
+	public void setUnits(int line, int column, boolean value) throws IndexOutOfBoundsException {
+		if(column > MATRIX_SIZE -1 || line > MATRIX_SIZE - 1){
 			throw new IndexOutOfBoundsException();
 		}
-		this.units[column][line] = value;
+		this.units[line][column] = value;
+	}
+	
+	@Override
+	public String toString(){
+		String string = "";
+		for(int i = 0; i < 4; i++){
+			for (int j = 0; j < 4; j++){
+				string += this.units[i][j] == true ? "#" : ".";
+				string += " ";
+			}
+			string += "\n";
+		}
+		return string;
+		
 	}
 	
 	

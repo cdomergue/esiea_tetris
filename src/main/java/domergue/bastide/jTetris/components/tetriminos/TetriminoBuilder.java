@@ -10,10 +10,7 @@ public class TetriminoBuilder {
 	}
 	
 	public static TetriminoBuilder getInstance(){
-		if(instance == null){
-			instance = new TetriminoBuilder();
-		}
-		return instance;
+		return (instance == null) ? instance = new TetriminoBuilder() : instance;
 	}
 	
 	public long getLastTetriminoId(){
@@ -26,9 +23,9 @@ public class TetriminoBuilder {
 			
 		case PIECE_I:
 			shape.setUnits(0,0,true);
-			shape.setUnits(1,0,true);
-			shape.setUnits(2,0,true);
-			shape.setUnits(3,0,true);
+			shape.setUnits(0,1,true);
+			shape.setUnits(0,2,true);
+			shape.setUnits(0,3,true);
 			break;
 		case PIECE_O:
 			shape.setUnits(0, 0, true);
@@ -38,32 +35,32 @@ public class TetriminoBuilder {
 			break;
 		case PIECE_T:
 			shape.setUnits(0, 0, true);
-			shape.setUnits(1, 0, true);
-			shape.setUnits(2, 0, true);
+			shape.setUnits(0, 1, true);
+			shape.setUnits(0, 2, true);
 			shape.setUnits(1, 1, true);
 			break;
 		case PIECE_L:
 			shape.setUnits(0, 0, true);
-			shape.setUnits(1, 0, true);
-			shape.setUnits(2, 0, true);
 			shape.setUnits(0, 1, true);
+			shape.setUnits(0, 2, true);
+			shape.setUnits(1, 0, true);
 			break;
 		case PIECE_J:
 			shape.setUnits(0, 0, true);
-			shape.setUnits(1, 0, true);
-			shape.setUnits(2, 0, true);
-			shape.setUnits(2, 1, true);
+			shape.setUnits(0, 1, true);
+			shape.setUnits(0, 2, true);
+			shape.setUnits(1, 2, true);
 			break;
 		case PIECE_Z:
 			shape.setUnits(0, 0, true);
-			shape.setUnits(1, 0, true);
+			shape.setUnits(0, 1, true);
 			shape.setUnits(1, 1, true);
-			shape.setUnits(2, 1, true);
+			shape.setUnits(1, 2, true);
 			break;
 		case PIECE_S:
-			shape.setUnits(1, 0, true);
-			shape.setUnits(2, 0, true);
 			shape.setUnits(0, 1, true);
+			shape.setUnits(0, 2, true);
+			shape.setUnits(1, 0, true);
 			shape.setUnits(1, 1, true);
 		default:
 			break;
