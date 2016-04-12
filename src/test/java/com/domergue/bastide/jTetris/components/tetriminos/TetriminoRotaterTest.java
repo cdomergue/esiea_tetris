@@ -1,14 +1,14 @@
-package test.java.domergue.bastide.jTetris.components.tetriminos;
+package com.domergue.bastide.jTetris.components.tetriminos;
 
 import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import main.java.domergue.bastide.jTetris.components.tetriminos.Tetrimino;
-import main.java.domergue.bastide.jTetris.components.tetriminos.TetriminoBuilder;
-import main.java.domergue.bastide.jTetris.components.tetriminos.TetriminoPieces;
-import main.java.domergue.bastide.jTetris.components.tetriminos.TetriminoRotater;
+import com.domergue.bastide.jTetris.components.tetriminos.Tetrimino;
+import com.domergue.bastide.jTetris.components.tetriminos.TetriminoBuilder;
+import com.domergue.bastide.jTetris.components.tetriminos.TetriminoPieces;
+import com.domergue.bastide.jTetris.components.tetriminos.TetriminoRotater;
 
 public class TetriminoRotaterTest {
 	

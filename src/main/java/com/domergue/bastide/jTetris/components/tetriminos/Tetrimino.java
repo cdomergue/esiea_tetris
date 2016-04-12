@@ -1,4 +1,4 @@
-package main.java.domergue.bastide.jTetris.components.tetriminos;
+package com.domergue.bastide.jTetris.components.tetriminos;
 
 public class Tetrimino {
 

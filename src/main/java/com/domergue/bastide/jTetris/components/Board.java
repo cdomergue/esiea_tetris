@@ -1,8 +1,8 @@
-package main.java.domergue.bastide.jTetris.components;
+package com.domergue.bastide.jTetris.components;
 
-import main.java.domergue.bastide.jTetris.components.tetriminos.Tetrimino;
-import main.java.domergue.bastide.jTetris.components.throwables.BottomTouched;
-import main.java.domergue.bastide.jTetris.components.throwables.SideTouched;
+import com.domergue.bastide.jTetris.components.tetriminos.Tetrimino;
+import com.domergue.bastide.jTetris.components.throwables.BottomTouched;
+import com.domergue.bastide.jTetris.components.throwables.SideTouched;
 
 public class Board {
 

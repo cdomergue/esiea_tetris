@@ -1,4 +1,4 @@
-package main.java.domergue.bastide.jTetris.components;
+package com.domergue.bastide.jTetris.components;
 
 public class Cell {
 	

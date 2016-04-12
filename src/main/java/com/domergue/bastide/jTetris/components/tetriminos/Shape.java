@@ -1,7 +1,7 @@
-package main.java.domergue.bastide.jTetris.components.tetriminos;
+package com.domergue.bastide.jTetris.components.tetriminos;
 
-import main.java.domergue.bastide.jTetris.components.throwables.BottomTouched;
-import main.java.domergue.bastide.jTetris.components.throwables.SideTouched;
+import com.domergue.bastide.jTetris.components.throwables.BottomTouched;
+import com.domergue.bastide.jTetris.components.throwables.SideTouched;
 
 public class Shape {
 

@@ -1,12 +1,12 @@
-package test.java.domergue.bastide.jTetris.components.tetriminos;
+package com.domergue.bastide.jTetris.components.tetriminos;
 
 import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import main.java.domergue.bastide.jTetris.components.tetriminos.Shape;
-import main.java.domergue.bastide.jTetris.components.tetriminos.Tetrimino;
+import com.domergue.bastide.jTetris.components.tetriminos.Shape;
+import com.domergue.bastide.jTetris.components.tetriminos.Tetrimino;
 
 public class TetriminoTest {
 	

@@ -1,17 +1,17 @@
-package test.java.domergue.bastide.jTetris.components;
+package com.domergue.bastide.jTetris.components;
 
 import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import main.java.domergue.bastide.jTetris.components.Board;
-import main.java.domergue.bastide.jTetris.components.tetriminos.Tetrimino;
-import main.java.domergue.bastide.jTetris.components.tetriminos.TetriminoBuilder;
-import main.java.domergue.bastide.jTetris.components.tetriminos.TetriminoPieces;
-import main.java.domergue.bastide.jTetris.components.tetriminos.TetriminoRotater;
-import main.java.domergue.bastide.jTetris.components.throwables.BottomTouched;
-import main.java.domergue.bastide.jTetris.components.throwables.SideTouched;
+import com.domergue.bastide.jTetris.components.Board;
+import com.domergue.bastide.jTetris.components.tetriminos.Tetrimino;
+import com.domergue.bastide.jTetris.components.tetriminos.TetriminoBuilder;
+import com.domergue.bastide.jTetris.components.tetriminos.TetriminoPieces;
+import com.domergue.bastide.jTetris.components.tetriminos.TetriminoRotater;
+import com.domergue.bastide.jTetris.components.throwables.BottomTouched;
+import com.domergue.bastide.jTetris.components.throwables.SideTouched;
 
 public class BoardTest {
 	

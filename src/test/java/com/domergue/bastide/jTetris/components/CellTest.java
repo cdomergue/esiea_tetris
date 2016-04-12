@@ -1,11 +1,11 @@
-package test.java.domergue.bastide.jTetris.components;
+package com.domergue.bastide.jTetris.components;
 
 import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import main.java.domergue.bastide.jTetris.components.Cell;
+import com.domergue.bastide.jTetris.components.Cell;
 
 public class CellTest {
 	
