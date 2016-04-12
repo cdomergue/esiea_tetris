@@ -10,6 +10,8 @@ import main.java.domergue.bastide.jTetris.components.tetriminos.Tetrimino;
 import main.java.domergue.bastide.jTetris.components.tetriminos.TetriminoBuilder;
 import main.java.domergue.bastide.jTetris.components.tetriminos.TetriminoPieces;
 import main.java.domergue.bastide.jTetris.components.tetriminos.TetriminoRotater;
+import main.java.domergue.bastide.jTetris.components.throwables.BottomTouched;
+import main.java.domergue.bastide.jTetris.components.throwables.SideTouched;
 
 public class BoardTest {
 	
@@ -46,6 +48,7 @@ public class BoardTest {
 	
 	@Test
 	public void shouldHaveATetrimino() {
+		board.resetCells();
 		TetriminoBuilder tBuild = TetriminoBuilder.getInstance();
 		Tetrimino tetrimino = tBuild.build(TetriminoPieces.PIECE_S);
 		board.addNewMovingTetrimino(tetrimino);
@@ -54,11 +57,11 @@ public class BoardTest {
 		assertEquals(tetrimino.getTetriminoId(), board.getCell(0, 4).getTetriminoId());
 		assertEquals(tetrimino.getTetriminoId(), board.getCell(2, 5).getTetriminoId());
 		assertEquals(tetrimino.getTetriminoId(), board.getCell(3, 6).getTetriminoId());
-			
 	}
 	
 	@Test
-	public void moveTetriminoDown() {
+	public void moveTetriminoDown() throws BottomTouched {
+		board.resetCells();
 		TetriminoBuilder tBuild = TetriminoBuilder.getInstance();
 		Tetrimino tetrimino = tBuild.build(TetriminoPieces.PIECE_S);
 		board.addNewMovingTetrimino(tetrimino);
@@ -70,7 +73,8 @@ public class BoardTest {
 	}
 	
 	@Test
-	public void moveTetriminoLeft() {
+	public void moveTetriminoLeft() throws SideTouched {
+		board.resetCells();
 		TetriminoBuilder tBuild = TetriminoBuilder.getInstance();
 		Tetrimino tetrimino = tBuild.build(TetriminoPieces.PIECE_S);
 		board.addNewMovingTetrimino(tetrimino);
@@ -82,7 +86,8 @@ public class BoardTest {
 	}
 	
 	@Test
-	public void moveTetriminoRight() {
+	public void moveTetriminoRight() throws SideTouched {
+		board.resetCells();
 		TetriminoBuilder tBuild = TetriminoBuilder.getInstance();
 		Tetrimino tetrimino = tBuild.build(TetriminoPieces.PIECE_S);
 		board.addNewMovingTetrimino(tetrimino);
@@ -91,6 +96,44 @@ public class BoardTest {
 		assertEquals(tetrimino.getTetriminoId(), board.getCell(0, 5).getTetriminoId());
 		assertEquals(tetrimino.getTetriminoId(), board.getCell(2, 6).getTetriminoId());
 		assertEquals(tetrimino.getTetriminoId(), board.getCell(3, 7).getTetriminoId());
+		
+		board.resetCells();
+	}
+	
+	@Test(expected=BottomTouched.class)
+	public void bottomTouched() throws BottomTouched {
+		board.resetCells();
+		TetriminoBuilder tBuild = TetriminoBuilder.getInstance();
+		Tetrimino tetrimino = tBuild.build(TetriminoPieces.PIECE_S);
+		board.addNewMovingTetrimino(tetrimino);
+		for(int i = 0; i < 25; i++){
+			board.moveMovingTetriminoDown();
+		}
+	}
+	
+	@Test(expected=SideTouched.class)
+	public void sideTouchedRight() throws SideTouched {
+		board.resetCells();
+		TetriminoBuilder tBuild = TetriminoBuilder.getInstance();
+		Tetrimino tetrimino = tBuild.build(TetriminoPieces.PIECE_S);
+		board.addNewMovingTetrimino(tetrimino);
+
+		for(int i = 0; i < 25; i++){
+			board.moveMovingTetriminoRight();
+			
+		}
+	}
+	
+	@Test(expected=SideTouched.class)
+	public void sideTouchedLeft() throws SideTouched {
+		board.resetCells();
+		TetriminoBuilder tBuild = TetriminoBuilder.getInstance();
+		Tetrimino tetrimino = tBuild.build(TetriminoPieces.PIECE_S);
+		board.addNewMovingTetrimino(tetrimino);
+		tetrimino.getShape().moveUnitsRigth();
+		for(int i = 0; i < 25; i++){
+			board.moveMovingTetriminoLeft();
+		}
 	}
 
 }

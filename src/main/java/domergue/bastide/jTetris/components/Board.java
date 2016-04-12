@@ -1,71 +1,80 @@
 package main.java.domergue.bastide.jTetris.components;
 
 import main.java.domergue.bastide.jTetris.components.tetriminos.Tetrimino;
+import main.java.domergue.bastide.jTetris.components.throwables.BottomTouched;
+import main.java.domergue.bastide.jTetris.components.throwables.SideTouched;
 
 public class Board {
-	
+
 	public static final int DEFAULT_COLUMNS = 10;
 	public static final int DEFAULT_LINES = 21;
-	
+
 	private static Board instance;
 	private Tetrimino movingTetrimino;
 	private Cell[][] cells;
-	
-	private Board (){
+
+	private Board() {
 		cells = new Cell[DEFAULT_LINES][DEFAULT_COLUMNS];
 		initCells();
 	}
-	
-	public void addNewMovingTetrimino(Tetrimino tetrimino){
+
+	public void addNewMovingTetrimino(Tetrimino tetrimino) {
 		tetrimino.setX(0);
 		tetrimino.setY((DEFAULT_COLUMNS / 2) - 2);
 		this.setMovingTetrimino(tetrimino);
 		putMovingTetrimino();
 	}
-	
-	public void moveMovingTetriminoDown(){
-		if(movingTetrimino.getX() + 1 < DEFAULT_LINES){
+
+	public void moveMovingTetriminoDown() throws BottomTouched {
+		if (movingTetrimino.getX() + 1 < DEFAULT_LINES - 3) {
 			movingTetrimino.setX(movingTetrimino.getX() + 1);
-			updateMovingTetrimino();
-		}	
-	}
-	
-	public void moveMovingTetriminoLeft(){
-		if(movingTetrimino.getY() - 1 >= 0){
-			movingTetrimino.setY(movingTetrimino.getY() - 1);
-			updateMovingTetrimino();
+		} else {
+			movingTetrimino.getShape().moveUnitsDown();
 		}
-		
+		updateMovingTetrimino();
 	}
-	
-	public void moveMovingTetriminoRight(){
-		if(movingTetrimino.getY() + 1 < DEFAULT_COLUMNS){
+
+	public void moveMovingTetriminoLeft() throws SideTouched {
+		if (movingTetrimino.getY() - 1 >= 0) {
+			movingTetrimino.setY(movingTetrimino.getY() - 1);
+		} else {
+			movingTetrimino.getShape().moveUnitsLeft();
+		}
+		updateMovingTetrimino();
+
+	}
+
+	public void moveMovingTetriminoRight() throws SideTouched {
+		if (movingTetrimino.getY() + 1 < DEFAULT_COLUMNS - 3) {
 			movingTetrimino.setY(movingTetrimino.getY() + 1);
 			updateMovingTetrimino();
+		} else {
+			movingTetrimino.getShape().moveUnitsRigth();
 		}
+		updateMovingTetrimino();
 	}
-	
-	public void updateMovingTetrimino(){
+
+	public void updateMovingTetrimino() {
 		removeMovingTetrimino();
 		putMovingTetrimino();
 	}
-	
-	private void removeMovingTetrimino(){
-		for(int line = 0; line < DEFAULT_LINES; line++){
-			for(int column = 0; column < DEFAULT_COLUMNS; column++){
-				if(cells[line][column].getTetriminoId() == movingTetrimino.getTetriminoId()){
+
+	private void removeMovingTetrimino() {
+		for (int line = 0; line < DEFAULT_LINES; line++) {
+			for (int column = 0; column < DEFAULT_COLUMNS; column++) {
+				if (cells[line][column].getTetriminoId() == movingTetrimino.getTetriminoId()) {
 					cells[line][column].setTetriminoId(0);
 					cells[line][column].setOccupied(false);
 				}
 			}
 		}
 	}
-	
+
 	private void putMovingTetrimino() {
-		for(int i = movingTetrimino.getX(), k = 0; i < movingTetrimino.getX() + 4; i++, k++){
-			for(int j = movingTetrimino.getY(), l = 0; j < movingTetrimino.getY() + 4; j++, l++){
+		for (int i = movingTetrimino.getX(), k = 0; i < movingTetrimino.getX() + 4; i++, k++) {
+			for (int j = movingTetrimino.getY(), l = 0; j < movingTetrimino.getY() + 4; j++, l++) {
 				cells[i][j].setTetriminoId(movingTetrimino.getTetriminoId());
-				if(movingTetrimino.getShape().getUnits(k, l) == true){
+				if (movingTetrimino.getShape().getUnits(k, l) == true) {
 					cells[i][j].setOccupied(true);
 				}
 			}
@@ -73,18 +82,22 @@ public class Board {
 	}
 
 	private void initCells() {
-		for(int line = 0; line < DEFAULT_LINES; line++){
-			for(int column = 0; column < DEFAULT_COLUMNS; column++){
+		for (int line = 0; line < DEFAULT_LINES; line++) {
+			for (int column = 0; column < DEFAULT_COLUMNS; column++) {
 				cells[line][column] = new Cell();
 			}
 		}
 	}
-	
-	public static final Board getInstance(){
-		if(instance == null){
+
+	public void resetCells() {
+		initCells();
+	}
+
+	public static final Board getInstance() {
+		if (instance == null) {
 			instance = new Board();
 		}
-		return(instance);
+		return (instance);
 	}
 
 	public Cell[][] getCells() {
@@ -102,17 +115,17 @@ public class Board {
 	public void setMovingTetrimino(Tetrimino movingTetrimino) {
 		this.movingTetrimino = movingTetrimino;
 	}
-	
+
 	@Override
-	public String toString(){
+	public String toString() {
 		String string = "";
-		for(int line = 0; line < DEFAULT_LINES; line++){
-			for(int column = 0; column < DEFAULT_COLUMNS; column++){
+		for (int line = 0; line < DEFAULT_LINES; line++) {
+			for (int column = 0; column < DEFAULT_COLUMNS; column++) {
 				string += cells[line][column].isOccupied() ? "# " : ". ";
 			}
 			string += "\n";
 		}
 		return string;
 	}
-	
+
 }
