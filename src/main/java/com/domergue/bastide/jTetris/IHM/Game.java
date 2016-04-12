@@ -12,6 +12,8 @@ import org.newdawn.slick.util.ResourceLoader;
 
 import java.awt.Font;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Game extends BasicGame {
 
@@ -33,7 +35,7 @@ public class Game extends BasicGame {
 
     private MovingDown movingDown;
 
-    private Image unit;
+    private Map<String,Image> units;
     private TiledMap map;
     private GameContainer container;
     private Music background;
@@ -90,7 +92,7 @@ public class Game extends BasicGame {
         for (int i = 2; i < board.DEFAULT_LINES; i++) {
             for (int j = 0; j < board.DEFAULT_COLUMNS; j++) {
                 if (board.getCell(i, j).isOccupied()) {
-                    g.drawImage(unit, j * 30, i * 30);
+                    g.drawImage(units.get(board.getCell(i,j).getColor()), j * 30, i * 30);
                 }
             }
         }
@@ -113,8 +115,15 @@ public class Game extends BasicGame {
     }
 
     private void loadImages() {
+        units = new HashMap();
         try {
-            unit = new Image("images/unit_yellow.png");
+            units.put("yellow", new Image("images/unit_yellow.png"));
+            units.put("bblue", new Image("images/unit_bblue.png"));
+            units.put("blue", new Image("images/unit_blue.png"));
+            units.put("green", new Image("images/unit_green.png"));
+            units.put("orange", new Image("images/unit_orange.png"));
+            units.put("purple", new Image("images/unit_purple.png"));
+            units.put("red", new Image("images/unit_red.png"));
         } catch (SlickException e) {
             e.printStackTrace();
         }

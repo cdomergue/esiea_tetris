@@ -24,42 +24,49 @@ public class TetriminoBuilder {
 		switch (piece) {
 
 		case PIECE_I:
+			shape.setColor("bblue");
 			shape.setUnits(0, 0, true);
 			shape.setUnits(0, 1, true);
 			shape.setUnits(0, 2, true);
 			shape.setUnits(0, 3, true);
 			break;
 		case PIECE_O:
+			shape.setColor("yellow");
 			shape.setUnits(0, 0, true);
 			shape.setUnits(1, 0, true);
 			shape.setUnits(0, 1, true);
 			shape.setUnits(1, 1, true);
 			break;
 		case PIECE_T:
+			shape.setColor("purple");
 			shape.setUnits(0, 0, true);
 			shape.setUnits(0, 1, true);
 			shape.setUnits(0, 2, true);
 			shape.setUnits(1, 1, true);
 			break;
 		case PIECE_L:
+			shape.setColor("orange");
 			shape.setUnits(0, 0, true);
 			shape.setUnits(0, 1, true);
 			shape.setUnits(0, 2, true);
 			shape.setUnits(1, 0, true);
 			break;
 		case PIECE_J:
+			shape.setColor("blue");
 			shape.setUnits(0, 0, true);
 			shape.setUnits(0, 1, true);
 			shape.setUnits(0, 2, true);
 			shape.setUnits(1, 2, true);
 			break;
 		case PIECE_Z:
+			shape.setColor("red");
 			shape.setUnits(0, 0, true);
 			shape.setUnits(0, 1, true);
 			shape.setUnits(1, 1, true);
 			shape.setUnits(1, 2, true);
 			break;
 		case PIECE_S:
+			shape.setColor("green");
 			shape.setUnits(0, 1, true);
 			shape.setUnits(0, 2, true);
 			shape.setUnits(1, 0, true);

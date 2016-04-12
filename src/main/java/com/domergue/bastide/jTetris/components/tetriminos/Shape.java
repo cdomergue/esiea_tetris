@@ -8,6 +8,7 @@ public class Shape {
 	public static final int MATRIX_SIZE = 4;
 
 	private Boolean[][] units;
+	private String color;
 
 	public Shape() {
 		this.units = new Boolean[MATRIX_SIZE][MATRIX_SIZE];
@@ -26,6 +27,7 @@ public class Shape {
 				this.units[i][j] = cloneShape.units[i][j];
 			}
 		}
+		this.color = cloneShape.getColor();
 	}
 
 	private void initUnits(Boolean[][] units) {
@@ -159,4 +161,11 @@ public class Shape {
 
 	}
 
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
+	}
 }

@@ -143,6 +143,7 @@ public class Board {
 					}
 					cells[i][j].setTetriminoId(movingTetrimino.getTetriminoId());
 					cells[i][j].setOccupied(true);
+                    cells[i][j].setColor(movingTetrimino.getShape().getColor());
 
 				}
 			}

@@ -4,11 +4,13 @@ public class Cell {
 	
 	private long tetriminoId;
 	private boolean occupied;
-	
-	public Cell(){
+	private String color;
+
+	public Cell() {
 		this.setTetriminoId(0);
 		this.setOccupied(false);
-		
+		this.setColor("yellow");
+
 	}
 
 	public long getTetriminoId() {
@@ -26,6 +28,13 @@ public class Cell {
 	public void setOccupied(boolean occupied) {
 		this.occupied = occupied;
 	}
-	
-	
+
+
+	public void setColor(String color) {
+		this.color = color;
+	}
+
+	public String getColor(){
+		return this.color;
+	}
 }

@@ -16,7 +16,7 @@ public class TetriminoRotater {
 
 	public Tetrimino rotate(Tetrimino tetrimino, byte rotation) {
 		Shape newShape = new Shape();
-
+		newShape.setColor(tetrimino.getShape().getColor());
 		switch (rotation) {
 		case ROTATE_RIGHT:
 			for (int i = 0; i < Shape.MATRIX_SIZE; i++) {
