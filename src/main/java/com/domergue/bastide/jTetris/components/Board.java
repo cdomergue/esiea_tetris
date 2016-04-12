@@ -127,6 +127,35 @@ public class Board {
 			}
 		}
 	}
+	
+	public int checkLine(){
+		int cpt = 0;
+		int nbOfLines = 0;
+		for (int line = 0; line < DEFAULT_LINES; line++) {
+			for (int column = 0; column < DEFAULT_COLUMNS; column++) {
+				if(cells[line][column].isOccupied()){
+					cpt++;
+				}
+			}
+			if(cpt == DEFAULT_COLUMNS){
+				nbOfLines++;
+				removeLine(line);
+			}
+			cpt = 0;
+		}
+		
+		return nbOfLines;
+	}
+
+	private void removeLine(int line) {
+		for(int i = line; i > 0; i--){
+			for(int j = 0; j < DEFAULT_COLUMNS; j++){
+				cells[i][j].setTetriminoId(cells[i-1][j].getTetriminoId());
+				cells[i][j].setOccupied(cells[i-1][j].isOccupied());
+			}
+		}
+		
+	}
 
 	private void initCells() {
 		for (int line = 0; line < DEFAULT_LINES; line++) {

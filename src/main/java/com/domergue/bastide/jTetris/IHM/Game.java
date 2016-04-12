@@ -80,6 +80,7 @@ public class Game extends BasicGame {
 		} catch (SideTouched e) {
 
 		}
+		board.checkLine();
 	}
 
 	private void move() throws SideTouched {
