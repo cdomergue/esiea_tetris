@@ -12,7 +12,6 @@ public class MovingDown extends Thread {
 	
 	private Board board;
 	private Thread mainThread;
-	private boolean notInterupted = true;
 
 	public MovingDown(Board board, Thread thread){
 		this.board = board;
@@ -20,7 +19,7 @@ public class MovingDown extends Thread {
 	}
 	
 	public void run(){
-		while(mainThread.isAlive() && notInterupted){
+		while(mainThread.isAlive()){
 			try {
 				board.moveMovingTetriminoDown();
 				Thread.sleep(board.getSpeed());

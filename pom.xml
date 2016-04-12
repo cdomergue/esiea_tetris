@@ -30,6 +30,12 @@
 			<artifactId>mockito-core</artifactId>
 			<version>1.10.19</version>
 		</dependency>
+		<dependency>
+			<groupId>org.jcraft</groupId>
+			<artifactId>jorbis</artifactId>
+			<version>0.0.17</version>
+			<scope>runtime</scope>
+		</dependency>
 	</dependencies>
 
 	<build>

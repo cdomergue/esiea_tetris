@@ -1,144 +1,157 @@
 package com.domergue.bastide.jTetris.IHM;
 
-import org.newdawn.slick.AppGameContainer;
-import org.newdawn.slick.BasicGame;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.Input;
-import org.newdawn.slick.SlickException;
-
 import com.domergue.bastide.jTetris.components.Board;
 import com.domergue.bastide.jTetris.components.tetriminos.Tetrimino;
 import com.domergue.bastide.jTetris.components.tetriminos.TetriminoBuilder;
-import com.domergue.bastide.jTetris.components.tetriminos.TetriminoPieces;
 import com.domergue.bastide.jTetris.components.tetriminos.TetriminoRotater;
-import com.domergue.bastide.jTetris.components.throwables.BottomTouched;
 import com.domergue.bastide.jTetris.components.throwables.SideTouched;
+import org.newdawn.slick.*;
+import org.newdawn.slick.tiled.TiledMap;
 
 public class Game extends BasicGame {
 
-	/** Screen width */
-	private static final int WIDTH = 300;
-	/** Screen height */
-	private static final int HEIGHT = 630;
+    /**
+     * Screen width
+     */
+    private static final int WIDTH = 300;
+    /**
+     * Screen height
+     */
+    private static final int HEIGHT = 660;
 
-	private static final TetriminoBuilder tBuild = TetriminoBuilder.getInstance();
-	private static final TetriminoRotater tRotate = TetriminoRotater.getInstance();
+    private static final TetriminoBuilder tBuild = TetriminoBuilder.getInstance();
+    private static final TetriminoRotater tRotate = TetriminoRotater.getInstance();
 
-	private Board board;
-	private boolean moving;
-	private int direction;
-	
-	private MovingDown movingDown;
+    private Board board;
+    private boolean moving;
+    private int direction;
 
-	private Image unit;
+    private MovingDown movingDown;
 
-	public Game() {
-		super("jTetris");
-	}
+    private Image unit;
+    private TiledMap map;
+    private GameContainer container;
+    private Music background;
 
-	public void render(GameContainer container, Graphics g) throws SlickException {
-		// g.drawString("Hello, " + Integer.toString(counter) + "!", 50, 50);
-		drawBoard(g);
-	}
+    public Game() {
+        super("jTetris");
+    }
 
-	private void drawBoard(Graphics g) {
-		for (int i = 0; i < board.DEFAULT_LINES; i++) {
-			for (int j = 0; j < board.DEFAULT_COLUMNS; j++) {
-				if (board.getCell(i, j).isOccupied()) {
-					g.drawImage(unit, j * 30, i * 30);
-				}
-			}
-		}
+    public static void main(String[] args) throws SlickException {
+        AppGameContainer app = new AppGameContainer(new Game());
+        app.setDisplayMode(WIDTH, HEIGHT, false);
+        app.setForceExit(false);
+        app.start();
+    }
 
-	}
+    public void render(GameContainer container, Graphics g) throws SlickException {
+        // g.drawString("Hello, " + Integer.toString(counter) + "!", 50, 50);
+        this.map.render(0, 0);
+        drawBoard(g);
 
-	@Override
-	public void init(GameContainer container) throws SlickException {
-		board = Board.getInstance();
-		Tetrimino tetrimino = tBuild.pickRandom();
-		board.addNewMovingTetrimino(tetrimino);
-		loadImages();
-		movingDown = new MovingDown(board, Thread.currentThread());
-		movingDown.start();
-	}
+    }
 
-	private void loadImages() {
-		try {
-			unit = new Image("images/unit_yellow.png");
-		} catch (SlickException e) {
-			e.printStackTrace();
-		}
+    private void drawBoard(Graphics g) {
+        for (int i = 2; i < board.DEFAULT_LINES; i++) {
+            for (int j = 0; j < board.DEFAULT_COLUMNS; j++) {
+                if (board.getCell(i, j).isOccupied()) {
+                    g.drawImage(unit, j * 30, i * 30);
+                }
+            }
+        }
 
-	}
+    }
 
-	@Override
-	public void update(GameContainer container, int delta) throws SlickException {
-		try {
-			move();
-		} catch (SideTouched e) {
+    @Override
+    public void init(GameContainer container) throws SlickException {
+        this.container = container;
+        this.map = new TiledMap("maps/board.tmx");
+        board = Board.getInstance();
+        Tetrimino tetrimino = tBuild.pickRandom();
+        board.addNewMovingTetrimino(tetrimino);
+        loadImages();
+        movingDown = new MovingDown(board, Thread.currentThread());
+        movingDown.start();
+        background = new Music("music/music.ogg");
+        background.loop();
+    }
 
-		}
-		board.checkLine();
-	}
+    private void loadImages() {
+        try {
+            unit = new Image("images/unit_yellow.png");
+        } catch (SlickException e) {
+            e.printStackTrace();
+        }
 
-	private void move() throws SideTouched {
-		if (this.moving) {
-			switch (this.direction) {
-			case 1:
-				board.moveMovingTetriminoLeft();
-				break;
-			case 3:
-				board.moveMovingTetriminoRight();
-				break;
-			
-			case 0:
-				board.setMovingTetrimino(tRotate.rotate(board.getMovingTetrimino(), TetriminoRotater.ROTATE_LEFT));
-				break;
-			case 2:
-				board.setSpeed(42);
-				movingDown.interrupt();
-				break;
-			}
-			this.moving = false;
-			board.tryUpdateMovingTetrimino();
-		}
-	}
+    }
 
-	@Override
-	public void keyPressed(int key, char c) {
-		switch (key) {
-		case Input.KEY_UP:
-			this.direction = 0;
-			this.moving = true;
-			break;
-		case Input.KEY_LEFT:
-			this.direction = 1;
-			this.moving = true;
-			break;
-		case Input.KEY_DOWN:
-			this.direction = 2;
-			this.moving = true;
-			break;
-		case Input.KEY_RIGHT:
-			this.direction = 3;
-			this.moving = true;
-			break;
-		}
-	}
-	
-	@Override
-	public void keyReleased(int key, char c) {
-		this.moving = false;
-		board.setSpeed(board.getNormalSpeed());
-	}
+    @Override
+    public void update(GameContainer container, int delta) throws SlickException {
+        try {
+            move();
+        } catch (SideTouched e) {
 
-	public static void main(String[] args) throws SlickException {
-		AppGameContainer app = new AppGameContainer(new Game());
-		app.setDisplayMode(WIDTH, HEIGHT, false);
-		app.setForceExit(false);
-		app.start();
-	}
+        }
+        board.checkLine();
+    }
+
+    private void move() throws SideTouched {
+        if (this.moving) {
+            switch (this.direction) {
+                case 1:
+                    board.moveMovingTetriminoLeft();
+                    break;
+                case 3:
+                    board.moveMovingTetriminoRight();
+                    break;
+
+                case 0:
+                    board.setMovingTetrimino(tRotate.rotate(board.getMovingTetrimino(), TetriminoRotater.ROTATE_LEFT));
+                    break;
+                case 2:
+                    board.setSpeed(42);
+                    movingDown.interrupt();
+                    break;
+            }
+            this.moving = false;
+            board.tryUpdateMovingTetrimino();
+        }
+    }
+
+    @Override
+    public void keyPressed(int key, char c) {
+        switch (key) {
+            case Input.KEY_UP:
+                this.direction = 0;
+                this.moving = true;
+                break;
+            case Input.KEY_LEFT:
+                this.direction = 1;
+                this.moving = true;
+                break;
+            case Input.KEY_DOWN:
+                this.direction = 2;
+                this.moving = true;
+                break;
+            case Input.KEY_RIGHT:
+                this.direction = 3;
+                this.moving = true;
+                break;
+            case Input.KEY_M:
+                if(this.background.playing()){
+                    this.background.stop();
+                } else {
+                    this.background.loop();
+                }
+                break;
+
+        }
+    }
+
+    @Override
+    public void keyReleased(int key, char c) {
+        this.moving = false;
+        board.setSpeed(board.getNormalSpeed());
+    }
 
 }
