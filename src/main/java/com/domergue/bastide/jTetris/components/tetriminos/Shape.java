@@ -13,6 +13,20 @@ public class Shape {
 		this.units = new Boolean[MATRIX_SIZE][MATRIX_SIZE];
 		initUnits(this.units);
 	}
+	
+	/**
+	 * Create a clone of the shape
+	 * 
+	 * @param cloneShape the shape to clone
+	 */
+	public Shape(Shape cloneShape){
+		this.units = new Boolean[MATRIX_SIZE][MATRIX_SIZE];
+		for(int i = 0; i < MATRIX_SIZE; i++){
+			for (int j = 0; j < 4; j++) {
+				this.units[i][j] = cloneShape.units[i][j];
+			}
+		}
+	}
 
 	private void initUnits(Boolean[][] units) {
 		for (int i = 0; i < 4; i++) {

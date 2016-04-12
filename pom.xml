@@ -10,7 +10,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<main.class>com.domergue.bastide.jTetris.Game</main.class>
+		<main.class>com.domergue.bastide.jTetris.IHM.Game</main.class>
 	</properties>
 
 	<dependencies>

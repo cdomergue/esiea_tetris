@@ -1,5 +1,7 @@
 package com.domergue.bastide.jTetris.components.tetriminos;
 
+import java.util.Random;
+
 public class TetriminoBuilder {
 
 	private static TetriminoBuilder instance;
@@ -70,5 +72,31 @@ public class TetriminoBuilder {
 		lastTetriminoId++;
 		return tetrimino;
 
+	}
+	
+	public Tetrimino pickRandom(){
+		return build(randomPiece());
+	}
+	
+	private TetriminoPieces randomPiece(){
+		Random random = new Random();
+		switch(random.nextInt(7)){
+		case 1:
+			return TetriminoPieces.PIECE_I;
+		case 2:
+			return TetriminoPieces.PIECE_J;
+		case 3:
+			return TetriminoPieces.PIECE_L;
+		case 4:
+			return TetriminoPieces.PIECE_O;
+		case 5:
+			return TetriminoPieces.PIECE_S;
+		case 6:
+			return TetriminoPieces.PIECE_T;
+		case 7:
+			return TetriminoPieces.PIECE_Z;
+		default:
+			return TetriminoPieces.PIECE_I;
+		}
 	}
 }

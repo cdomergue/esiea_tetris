@@ -1,7 +1,10 @@
 package com.domergue.bastide.jTetris.components;
 
+import com.domergue.bastide.jTetris.components.tetriminos.Shape;
 import com.domergue.bastide.jTetris.components.tetriminos.Tetrimino;
+import com.domergue.bastide.jTetris.components.tetriminos.TetriminoBuilder;
 import com.domergue.bastide.jTetris.components.throwables.BottomTouched;
+import com.domergue.bastide.jTetris.components.throwables.OtherPieceTouched;
 import com.domergue.bastide.jTetris.components.throwables.SideTouched;
 
 public class Board {
@@ -11,7 +14,12 @@ public class Board {
 
 	private static Board instance;
 	private Tetrimino movingTetrimino;
+	private int movingTetriminoLastX = 0;
+	private int movingTetriminoLastY = 0;
+	private Shape movingTetriminoLastShape;
 	private Cell[][] cells;
+	private int speed = 500;
+	private int normalSpeed = 500;
 
 	private Board() {
 		cells = new Cell[DEFAULT_LINES][DEFAULT_COLUMNS];
@@ -22,39 +30,73 @@ public class Board {
 		tetrimino.setX(0);
 		tetrimino.setY((DEFAULT_COLUMNS / 2) - 2);
 		this.setMovingTetrimino(tetrimino);
-		putMovingTetrimino();
+		try {
+			putMovingTetrimino();
+		} catch (OtherPieceTouched e) {
+			//Partie perdu
+			System.out.println("Impossible de placer une nouvelle pièce. Fin du jeu.");
+		}
 	}
 
 	public void moveMovingTetriminoDown() throws BottomTouched {
+		saveLastCoordinates();
 		if (movingTetrimino.getX() + 1 < DEFAULT_LINES - 3) {
 			movingTetrimino.setX(movingTetrimino.getX() + 1);
 		} else {
 			movingTetrimino.getShape().moveUnitsDown();
 		}
-		updateMovingTetrimino();
+		tryUpdateMovingTetrimino();
 	}
 
 	public void moveMovingTetriminoLeft() throws SideTouched {
+		saveLastCoordinates();
 		if (movingTetrimino.getY() - 1 >= 0) {
 			movingTetrimino.setY(movingTetrimino.getY() - 1);
 		} else {
 			movingTetrimino.getShape().moveUnitsLeft();
 		}
-		updateMovingTetrimino();
+		tryUpdateMovingTetrimino();
 
 	}
 
 	public void moveMovingTetriminoRight() throws SideTouched {
+		saveLastCoordinates();
 		if (movingTetrimino.getY() + 1 < DEFAULT_COLUMNS - 3) {
 			movingTetrimino.setY(movingTetrimino.getY() + 1);
-			updateMovingTetrimino();
 		} else {
 			movingTetrimino.getShape().moveUnitsRigth();
 		}
-		updateMovingTetrimino();
+		tryUpdateMovingTetrimino();
 	}
 
-	public void updateMovingTetrimino() {
+	public void tryUpdateMovingTetrimino() {
+		try {
+			updateMovingTetrimino();
+		} catch (OtherPieceTouched e) {
+			restoreLastCoordinates();
+			try {
+				updateMovingTetrimino();
+				addNewMovingTetrimino(TetriminoBuilder.getInstance().pickRandom());
+				updateMovingTetrimino();
+			} catch (OtherPieceTouched e1) {
+				System.err.println("Erreur, impossible de restaurer la pièce");
+			}
+		}
+	}
+
+	private void restoreLastCoordinates() {
+		movingTetrimino.setX(movingTetriminoLastX);
+		movingTetrimino.setY(movingTetriminoLastY);
+		movingTetrimino.setShape(movingTetriminoLastShape);
+	}
+
+	private void saveLastCoordinates() {
+		this.movingTetriminoLastX = movingTetrimino.getX();
+		this.movingTetriminoLastY = movingTetrimino.getY();
+		this.movingTetriminoLastShape = new Shape(movingTetrimino.getShape());
+	}
+
+	private void updateMovingTetrimino() throws OtherPieceTouched {
 		removeMovingTetrimino();
 		putMovingTetrimino();
 	}
@@ -70,12 +112,17 @@ public class Board {
 		}
 	}
 
-	private void putMovingTetrimino() {
+	private void putMovingTetrimino() throws OtherPieceTouched {
 		for (int i = movingTetrimino.getX(), k = 0; i < movingTetrimino.getX() + 4; i++, k++) {
 			for (int j = movingTetrimino.getY(), l = 0; j < movingTetrimino.getY() + 4; j++, l++) {
-				cells[i][j].setTetriminoId(movingTetrimino.getTetriminoId());
-				if (movingTetrimino.getShape().getUnits(k, l) == true) {
-					cells[i][j].setOccupied(true);
+				if(movingTetrimino.getShape().getUnits(k, l)){
+					if(cells[i][j].isOccupied()){
+						throw new OtherPieceTouched();
+					}
+					cells[i][j].setTetriminoId(movingTetrimino.getTetriminoId());
+					if (movingTetrimino.getShape().getUnits(k, l) == true) {
+						cells[i][j].setOccupied(true);
+					}
 				}
 			}
 		}
@@ -126,6 +173,18 @@ public class Board {
 			string += "\n";
 		}
 		return string;
+	}
+
+	public int getSpeed() {
+		return speed;
+	}
+
+	public void setSpeed(int speed) {
+		this.speed = speed;
+	}
+
+	public int getNormalSpeed() {
+		return normalSpeed;
 	}
 
 }
