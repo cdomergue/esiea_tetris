@@ -12,6 +12,7 @@ public class MovingDown extends Thread {
 	
 	private Board board;
 	private Thread mainThread;
+	private Game game;
 
 	public MovingDown(Board board, Thread thread){
 		this.board = board;
@@ -19,7 +20,7 @@ public class MovingDown extends Thread {
 	}
 	
 	public void run(){
-		while(mainThread.isAlive()){
+		while(mainThread.isAlive() && !board.isGameEnded()){
 			try {
 				board.moveMovingTetriminoDown();
 				Thread.sleep(board.getSpeed());
@@ -32,8 +33,8 @@ public class MovingDown extends Thread {
 				continue;
 			}
 		}
-		System.out.println("Fermeture de jTetris\nMerci d'avoir joué !");
+		System.out.println("Shut MovingDown thread");
 	}
-	
-	
+
+
 }

@@ -8,6 +8,10 @@ import com.domergue.bastide.jTetris.components.tetriminos.TetriminoRotater;
 import com.domergue.bastide.jTetris.components.throwables.SideTouched;
 import org.newdawn.slick.*;
 import org.newdawn.slick.tiled.TiledMap;
+import org.newdawn.slick.util.ResourceLoader;
+
+import java.awt.Font;
+import java.io.InputStream;
 
 public class Game extends BasicGame {
 
@@ -33,6 +37,7 @@ public class Game extends BasicGame {
     private TiledMap map;
     private GameContainer container;
     private Music background;
+    private Music end;
     private Score score = Score.getInstance();
 
     public Game() {
@@ -50,9 +55,33 @@ public class Game extends BasicGame {
 
     public void render(GameContainer container, Graphics g) throws SlickException {
         this.map.render(0, 0);
-        g.drawString("Score : " + Long.toString(score.getCurrentScore()), 10, 10);
-        drawBoard(g);
+        if(board.isGameEnded()){
+            setFont(g);
+            g.setColor(new Color(164,0,0));
+            g.drawString("Final Score : ", 30, 268);
+            g.drawString(Long.toString(score.getCurrentScore()), 30, 302);
+            g.drawString("Best Score : ", 30, 336);
+            g.drawString(Long.toString(score.getBestScore()), 30, 368);
+        } else {
+            g.drawString("Score : " + Long.toString(score.getCurrentScore()), 10, 10);
+            g.drawString("Best Score : " + Long.toString(score.getBestScore()), 10, 30);
+            drawBoard(g);
+        }
 
+
+    }
+
+    private void setFont(Graphics g) {
+        try {
+            InputStream inputStream	= ResourceLoader.getResourceAsStream("fonts/nasalization-rg.ttf");
+            Font awtFont = Font.createFont(Font.TRUETYPE_FONT, inputStream);
+            awtFont = awtFont.deriveFont(32f); // set font size
+            TrueTypeFont font = new TrueTypeFont(awtFont, false);
+            g.setFont(font);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void drawBoard(Graphics g) {
@@ -77,6 +106,7 @@ public class Game extends BasicGame {
         movingDown = new MovingDown(board, Thread.currentThread());
         movingDown.start();
         background = new Music("music/music.ogg");
+        end = new Music("music/end.ogg");
         background.loop();
     }
 
@@ -92,11 +122,25 @@ public class Game extends BasicGame {
     @Override
     public void update(GameContainer container, int delta) throws SlickException {
         try {
-            move();
+            if(!board.isGameEnded()){
+                move();
+                board.checkLine();
+            } else {
+                endGame();
+            }
         } catch (SideTouched e) {
 
         }
-        board.checkLine();
+    }
+
+    private void endGame() {
+        background.stop();
+        if(!end.playing()){
+            end.loop();
+        }
+        if(score.getCurrentScore() > score.getBestScore()){
+            score.newHighScore(score.getCurrentScore());
+        }
     }
 
     private void move() throws SideTouched {
@@ -144,7 +188,7 @@ public class Game extends BasicGame {
             case Input.KEY_M:
                 if(this.background.playing()){
                     this.background.stop();
-                } else {
+                } else if (!board.isGameEnded()){
                     this.background.loop();
                 }
                 break;
@@ -157,5 +201,6 @@ public class Game extends BasicGame {
         this.moving = false;
         board.setSpeed(board.getNormalSpeed());
     }
+
 
 }

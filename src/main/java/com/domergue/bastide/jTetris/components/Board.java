@@ -23,6 +23,7 @@ public class Board {
 	private int speed = 500;
 	private int normalSpeed = 500;
 	private Score score = Score.getInstance();
+	private boolean gameEnded = false;
 
 	private Board() {
 		cells = new Cell[DEFAULT_LINES][DEFAULT_COLUMNS];
@@ -39,6 +40,7 @@ public class Board {
 		} catch (OtherPieceTouched e) {
 			//Partie perdu
 			System.out.println("Impossible de placer une nouvelle pièce. Fin du jeu.");
+			gameEnded = true;
 		}
 	}
 
@@ -224,4 +226,11 @@ public class Board {
 		return normalSpeed;
 	}
 
+	public boolean isGameEnded() {
+		return gameEnded;
+	}
+
+	public void setGameEnded(boolean gameEnded) {
+		this.gameEnded = gameEnded;
+	}
 }
