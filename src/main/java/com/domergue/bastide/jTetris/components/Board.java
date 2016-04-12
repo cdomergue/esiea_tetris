@@ -6,6 +6,8 @@ import com.domergue.bastide.jTetris.components.tetriminos.TetriminoBuilder;
 import com.domergue.bastide.jTetris.components.throwables.BottomTouched;
 import com.domergue.bastide.jTetris.components.throwables.OtherPieceTouched;
 import com.domergue.bastide.jTetris.components.throwables.SideTouched;
+import org.newdawn.slick.Music;
+import org.newdawn.slick.SlickException;
 
 public class Board {
 
@@ -20,6 +22,7 @@ public class Board {
 	private Cell[][] cells;
 	private int speed = 500;
 	private int normalSpeed = 500;
+	private Score score = Score.getInstance();
 
 	private Board() {
 		cells = new Cell[DEFAULT_LINES][DEFAULT_COLUMNS];
@@ -32,6 +35,7 @@ public class Board {
 		this.setMovingTetrimino(tetrimino);
 		try {
 			putMovingTetrimino();
+			score.add(20);
 		} catch (OtherPieceTouched e) {
 			//Partie perdu
 			System.out.println("Impossible de placer une nouvelle pièce. Fin du jeu.");
@@ -140,11 +144,15 @@ public class Board {
 			if(cpt == DEFAULT_COLUMNS){
 				nbOfLines++;
 				removeLine(line);
+				successLine();
 			}
 			cpt = 0;
 		}
-		
 		return nbOfLines;
+	}
+
+	private void successLine() {
+		score.add(200);
 	}
 
 	private void removeLine(int line) {

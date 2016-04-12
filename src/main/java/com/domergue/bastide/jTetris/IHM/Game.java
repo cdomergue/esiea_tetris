@@ -1,6 +1,7 @@
 package com.domergue.bastide.jTetris.IHM;
 
 import com.domergue.bastide.jTetris.components.Board;
+import com.domergue.bastide.jTetris.components.Score;
 import com.domergue.bastide.jTetris.components.tetriminos.Tetrimino;
 import com.domergue.bastide.jTetris.components.tetriminos.TetriminoBuilder;
 import com.domergue.bastide.jTetris.components.tetriminos.TetriminoRotater;
@@ -32,6 +33,7 @@ public class Game extends BasicGame {
     private TiledMap map;
     private GameContainer container;
     private Music background;
+    private Score score = Score.getInstance();
 
     public Game() {
         super("jTetris");
@@ -41,12 +43,14 @@ public class Game extends BasicGame {
         AppGameContainer app = new AppGameContainer(new Game());
         app.setDisplayMode(WIDTH, HEIGHT, false);
         app.setForceExit(false);
+        app.setVSync(true);
+        app.setShowFPS(false);
         app.start();
     }
 
     public void render(GameContainer container, Graphics g) throws SlickException {
-        // g.drawString("Hello, " + Integer.toString(counter) + "!", 50, 50);
         this.map.render(0, 0);
+        g.drawString("Score : " + Long.toString(score.getCurrentScore()), 10, 10);
         drawBoard(g);
 
     }
