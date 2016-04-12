@@ -154,7 +154,7 @@ public class Game extends BasicGame {
                     break;
 
                 case 0:
-                    board.setMovingTetrimino(tRotate.rotate(board.getMovingTetrimino(), TetriminoRotater.ROTATE_LEFT));
+                    board.rotate();
                     break;
                 case 2:
                     board.setSpeed(42);

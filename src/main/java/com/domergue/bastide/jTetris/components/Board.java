@@ -3,6 +3,7 @@ package com.domergue.bastide.jTetris.components;
 import com.domergue.bastide.jTetris.components.tetriminos.Shape;
 import com.domergue.bastide.jTetris.components.tetriminos.Tetrimino;
 import com.domergue.bastide.jTetris.components.tetriminos.TetriminoBuilder;
+import com.domergue.bastide.jTetris.components.tetriminos.TetriminoRotater;
 import com.domergue.bastide.jTetris.components.throwables.BottomTouched;
 import com.domergue.bastide.jTetris.components.throwables.OtherPieceTouched;
 import com.domergue.bastide.jTetris.components.throwables.SideTouched;
@@ -107,6 +108,21 @@ public class Board {
 		putMovingTetrimino();
 	}
 
+	public void rotate(){
+		removeMovingTetrimino();
+		TetriminoRotater.getInstance().rotate(movingTetrimino, TetriminoRotater.ROTATE_LEFT);
+		try {
+			putMovingTetrimino();
+		} catch (OtherPieceTouched otherPieceTouched) {
+			TetriminoRotater.getInstance().rotate(movingTetrimino, TetriminoRotater.ROTATE_RIGHT);
+			try {
+				putMovingTetrimino();
+			} catch (OtherPieceTouched otherPieceTouched1) {
+				System.err.println("Impossible de pivoter la pièce");
+			}
+		}
+	}
+
 	private void removeMovingTetrimino() {
 		for (int line = 0; line < DEFAULT_LINES; line++) {
 			for (int column = 0; column < DEFAULT_COLUMNS; column++) {
@@ -126,9 +142,8 @@ public class Board {
 						throw new OtherPieceTouched();
 					}
 					cells[i][j].setTetriminoId(movingTetrimino.getTetriminoId());
-					if (movingTetrimino.getShape().getUnits(k, l) == true) {
-						cells[i][j].setOccupied(true);
-					}
+					cells[i][j].setOccupied(true);
+
 				}
 			}
 		}
