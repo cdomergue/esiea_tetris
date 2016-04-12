@@ -55,13 +55,15 @@ public class Game extends BasicGame {
 
     public void render(GameContainer container, Graphics g) throws SlickException {
         this.map.render(0, 0);
+        g.setColor(new Color(164, 0, 0));
         if(board.isGameEnded()){
             setFont(g);
-            g.setColor(new Color(164,0,0));
-            g.drawString("Final Score : ", 30, 268);
-            g.drawString(Long.toString(score.getCurrentScore()), 30, 302);
-            g.drawString("Best Score : ", 30, 336);
-            g.drawString(Long.toString(score.getBestScore()), 30, 368);
+            g.drawString("Final Score : ", 30, 168);
+            g.drawString(Long.toString(score.getCurrentScore()), 30, 202);
+            g.drawString("Best Score : ", 30, 236);
+            g.drawString(Long.toString(score.getBestScore()), 30, 268);
+            g.drawString("Press enter", 30, 366);
+            g.drawString("to play again", 30, 398);
         } else {
             g.drawString("Score : " + Long.toString(score.getCurrentScore()), 10, 10);
             g.drawString("Best Score : " + Long.toString(score.getBestScore()), 10, 30);
@@ -192,8 +194,22 @@ public class Game extends BasicGame {
                     this.background.loop();
                 }
                 break;
+            case Input.KEY_ENTER:
+                if(board.isGameEnded()){
+                    restartGame();
+                }
 
         }
+    }
+
+    private void restartGame() {
+        board.resetCells();
+        board.setGameEnded(false);
+        movingDown = new MovingDown(board, Thread.currentThread());
+        movingDown.start();
+        score.setCurrentScore(0);
+        end.stop();
+        background.play();
     }
 
     @Override
